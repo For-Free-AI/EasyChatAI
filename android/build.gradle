@@ -1,0 +1,23 @@
+// v1.5：Flutter 3.44 官方模板结构
+// 镜像加速由全局 /root/.gradle/init.gradle 注入（allprojects）
+allprojects {
+    repositories {
+        // v1.6.0a：国内镜像优先，google()/mavenCentral() 兜底
+        maven { url "https://maven.aliyun.com/repository/google" }
+        maven { url "https://maven.aliyun.com/repository/central" }
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
